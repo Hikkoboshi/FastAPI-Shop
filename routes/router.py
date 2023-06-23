@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import List
 
 import aiohttp
 from fastapi import APIRouter, Depends, HTTPException
@@ -6,12 +6,11 @@ from fastapi_users import FastAPIUsers
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from crud import crud
+from catalog import crud
 from models.models import User, Category, Product
 from database import get_async_session
 from auth.auth import auth_backend
 from auth.manager import get_user_manager
-from auth.schemas import UserRead
 from schemas.schemas import CategoryCreate, CategoryRead, ProductCreate, ProductRead, CategoryProductsRead
 
 router = APIRouter()
