@@ -1,12 +1,10 @@
-from typing import List
-
 from fastapi import Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_async_session
-from models.models import Product, Category
-from schemas.schemas import CategoryCreate, ProductCreate, CategoryRead, ProductRead
+from user.models import Product, Category
+from schemas.schemas import CategoryCreate, ProductCreate
 
 
 async def get_products(skip: int, limit: int, session: AsyncSession = Depends(get_async_session)):

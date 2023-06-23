@@ -7,10 +7,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from catalog import crud
-from models.models import User, Category, Product
+from user.models import User, Category, Product
 from database import get_async_session
-from auth.auth import auth_backend
-from auth.manager import get_user_manager
+from user.auth import auth_backend
+from user.manager import get_user_manager
 from schemas.schemas import CategoryCreate, CategoryRead, ProductCreate, ProductRead, CategoryProductsRead
 
 router = APIRouter()

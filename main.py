@@ -6,8 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from catalog.crud import get_products
 from database import get_async_session
 from routes.router import fastapi_users, router
-from auth.auth import auth_backend
-from auth.schemas import UserRead, UserCreate, UserUpdate
+from user.auth import auth_backend
+from user.schemas import UserRead, UserCreate, UserUpdate
 
 
 app = FastAPI()
