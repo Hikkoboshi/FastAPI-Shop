@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container my-3">
+    <h3>Catalog</h3>
+    <div class="row row-cols-3">
+    {% for product in products %}
+        <div class="col mb-3">
+            <div class="card h-100" style="max-width: 540px;">
+              <div class="row h-100 g-0">
+                <div class="col-md-4 h-100">
+                  <img src="https://picsum.photos/200/200" class="img-fluid object-fit-cover rounded-start h-100" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.price }} $</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <nav>
+      <ul class="pagination justify-content-center">
+         {% if pagination.previous >= 0  %}
+            <li class="page-item">
+              <a class="page-link" href="/catalog?skip={{pagination.previous}}">Previous</a>
+            </li>
+         {% endif %}
+          {% for page in range(pagination.pages) %}
+            <li class="page-item"><a class="page-link" href="/catalog?skip={{page}}">{{page + 1}}</a></li>
+          {% endfor %}
+          {% if pagination.next != pagination.pages %}
+            <li class="page-item">
+              <a class="page-link" href="/catalog?skip={{pagination.next}}">Next</a>
+            </li>
+          {% endif %}
+      </ul>
+    </nav>
+</div>
+{% endblock %}
