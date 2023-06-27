@@ -1,4 +1,6 @@
 /migrations/versions/*
+/.idea
+/__pycache__
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
