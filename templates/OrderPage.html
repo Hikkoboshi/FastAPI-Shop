@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Order{% endblock %}
+
+{% block content %}
+    <form action="/order" method="POST" class="mx-auto" style="max-width: 600px;">
+        <h4>Create order</h4>
+        <p>Please fill the form to create order. Enter valid data so we can contact you</p>
+        <hr>
+        <div class="row mb-3">
+            <label class="col-12 fw-bold">
+                Name
+            </label>
+            <div class="col-6">
+                <label for="first_name" class="fw-semibold">
+                    First
+                </label>
+                <input name="first_name" id="first_name" type="text" class="form-control" placeholder="John">
+            </div>
+            <div class="col-6">
+                <label for="last_name" class="fw-semibold">
+                    Last
+                </label>
+                <input name="last_name" id="second_name" type="text" class="form-control" placeholder="Doe">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-8 fw-semibold">
+                Email
+                <input name="email" type="text" class="form-control" placeholder="johndoe@gmail.com">
+            </label>
+        </div>
+        <div class="row mb-3">
+            <label class="col-8 fw-semibold">
+                Phone
+                <input name="phone" type="text" class="form-control" placeholder="+15162255486">
+            </label>
+        </div>
+        <div class="row mb-2">
+
+            <label class="col-12 fw-semibold">
+                Address
+            </label>
+
+            <div class="col-12 mb-2">
+                <input name="address_1" type="text" class="form-control" placeholder="Street address">
+            </div>
+
+            <div class="col-12 mb-2">
+                <input name="address_2" type="text" class="form-control" placeholder="Street address 2">
+            </div>
+
+            <div class="col-6 mb-2">
+                <input name="city" type="text" class="form-control" placeholder="City">
+            </div>
+
+            <div class="col-6 mb-2">
+                <input name="region" type="text" class="form-control" placeholder="Region">
+            </div>
+
+            <div class="col-6 mb-2">
+                <input name="post" type="text" class="form-control" placeholder="Post/Zip code">
+            </div>
+
+            <div class="col-6 mb-2">
+                <input name="country" type="text" class="form-control" placeholder="Country">
+            </div>
+
+        </div>
+
+        <div class="col-12 fs-5 fw-semibold text-end">
+            Total: {{ basket.get_total_price() }} $
+        </div>
+
+        <div class="col-12 text-center">
+            <input type="submit" class="btn btn-dark px-5" value="Submit">
+        </div>
+    </form>
+{% endblock %}

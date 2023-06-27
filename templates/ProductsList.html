@@ -3,20 +3,22 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="container my-3">
     <h3>Catalog</h3>
     <div class="row row-cols-3">
     {% for product in products %}
-        <div class="col mb-3">
-            <div class="card h-100" style="max-width: 540px;">
+        <div class="col mb-3" style="min-height: 250px;">
+            <div class="card h-100">
               <div class="row h-100 g-0">
                 <div class="col-md-4 h-100">
-                  <img src="https://picsum.photos/200/200" class="img-fluid object-fit-cover rounded-start h-100" alt="...">
+                  <img src="https://picsum.photos/id/{{ range(1, 101) | random  }}/300/300" class="img-fluid object-fit-cover rounded-start h-100" alt="...">
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.price }} $</p>
+                  </div>
+                  <div class="card-body">
+                      <button class="btn btn-dark basket-add" data-product="{{ product.id }}">Add to basket</button>
                   </div>
                 </div>
               </div>
@@ -25,22 +27,63 @@
     {% endfor %}
     </div>
 
+    <div id="messages">
+    {% if request.session.messages %}
+        {{ request.session.messages.message }}
+    {% endif %}
+    </div>
+
     <nav>
       <ul class="pagination justify-content-center">
-         {% if pagination.previous >= 0  %}
+         {% if pagination.previous >= 1  %}
             <li class="page-item">
               <a class="page-link" href="/catalog?skip={{pagination.previous}}">Previous</a>
             </li>
          {% endif %}
-          {% for page in range(pagination.pages) %}
-            <li class="page-item"><a class="page-link" href="/catalog?skip={{page}}">{{page + 1}}</a></li>
+          {% for page in range(1, pagination.pages + 1) %}
+            <li class="page-item"><a class="page-link" href="/catalog?skip={{page}}">{{page}}</a></li>
           {% endfor %}
-          {% if pagination.next != pagination.pages %}
+          {% if pagination.next - 1 != pagination.pages %}
             <li class="page-item">
               <a class="page-link" href="/catalog?skip={{pagination.next}}">Next</a>
             </li>
           {% endif %}
       </ul>
     </nav>
-</div>
+
+    {% if request.session.messages %}
+      <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastPlacement">
+        <div id="success" class="toast bg-success text-light" aria-atomic="true" data-bs-autohide="true" data-bs-delay="1000">
+          <div class="toast-body">
+            {{ request.session.messages.success }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const toastElList = document.querySelectorAll('.toast')
+        $(document).on('click', '.basket-add', function plus(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/basket/add/',
+                data: {
+                    product_id: $(e.target).attr('data-product'),
+                    product_quantity: 1,
+                    //csrfmiddlewaretoken: csrftoken
+                },
+                dataType: 'json',
+                success: function (json) {
+                   //$("#basket-quantity").load(" #basket-quantity>*");
+                    //$("#messages").append(json.success);
+                    //$("#messages").load(" #messages>*");
+                    $('#success').toast('show')
+                },
+                error: function (xhr, errmsg, err) {}
+            });
+        })
+    </script>
 {% endblock %}

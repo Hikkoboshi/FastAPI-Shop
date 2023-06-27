@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Basket{% endblock %}
+
+{% block content %}
+    <h3>Basket</h3>
+    <div>
+        {% if basket %}
+            {% for item in basket.values() %}
+                {% with product=item.product %}
+            <div id="product-{{ product.id }}">
+                <div class="d-flex flex-wrap justify-content-between align-items-center position-relative border rounded basket-item mb-3 p-3">
+                    <div class="col-4 col-lg-2">
+                        {% if product.primary_image %}
+                                <img src="" class="img-fluid d-block mx-auto rounded" style="height:8em;object-fit:contain;">
+                        {% else %}
+                        {% endif %}
+                    </div>
+                    <div class="col-8 col-lg-10 col-xl-6 px-3 align-self-start">
+                        <div class="fw-bold"><a href="{{ product.get_absolute_url }}" class="text-dark text-decoration-none">{{ product.name }}</a></div>
+                        <div class="text-secondary fs-small">
+                            {% if product.weight %}<div>{{ product.weight }}</div>{% endif %}
+                            {% if product.description %}<div><strong>Description:</strong> {{ product.description }}</div>{% endif %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg text-center"><div class="text-secondary fs-small">price</div>{{ product.price }} $</div>
+                    <div class="col-12 col-md-4 col-lg text-center h-100">
+                        <div class="text-secondary fs-small">quantity</div>
+
+                        <div class="btn-group h-100">
+                            <button class="btn btn-light minus" value="{{ product.id }}"><i class="bi bi-dash"></i></button>
+                            <input type="number" id="quantity-{{ product.id }}" class="btn btn-light basket-item-count" value="{{ item.quantity }}" data-product="{{ product.id }}">
+                            <button class="btn btn-light plus" value="{{ product.id }}"><i class="bi bi-plus"></i></button>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-md-4 col-lg text-center">
+                        <div class="text-secondary fs-small">total</div>
+                        <strong>{{ item.total_price }} $</strong>
+                    </div>
+                    <a href=""
+                       class="d-flex justify-content-center align-items-center text-dark delete rounded-circle"
+                       data-product="{{ product.id }}">
+                        <i class="bi bi-x-circle"></i>
+                    </a>
+                </div>
+            </div>
+        {% endwith %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
